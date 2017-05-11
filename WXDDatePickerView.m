@@ -186,7 +186,7 @@
     selectYearStr = yearStr;
     [_yearsArr enumerateObjectsUsingBlock:^(NSString *subYearStr, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([selectYearStr isEqualToString:subYearStr]) {
-            [_pickerView selectRow:idx inComponent:0 animated:NO];
+            [_pickerView selectRow:idx inComponent:0 animated:YES];
             *stop = YES;
         }
     }];
@@ -195,7 +195,7 @@
     selectMonthStr = monthStr;
     [_monthsArr enumerateObjectsUsingBlock:^(NSString *subMonthStr, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([selectMonthStr isEqualToString:subMonthStr]) {
-            [_pickerView selectRow:idx inComponent:1 animated:NO];
+            [_pickerView selectRow:idx inComponent:1 animated:YES];
             *stop = YES;
         }
     }];
@@ -204,7 +204,7 @@
     selectDayStr = dayStr;
     [_daysArr enumerateObjectsUsingBlock:^(NSString *subDayStr, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([selectDayStr isEqualToString:subDayStr]) {
-            [_pickerView selectRow:idx inComponent:2 animated:NO];
+            [_pickerView selectRow:idx inComponent:2 animated:YES];
             *stop = YES;
         }
     }];
@@ -323,20 +323,13 @@
             break;
     }
     if (component == 0 || component == 1) {
-        NSString *dateStr = [NSString stringWithFormat:@"%@-%@",selectYearStr,selectMonthStr];
-        NSDate *date = [self dateFromString:dateStr withDateFormat:@"yyyy-MM"];
-        [_daysArr removeAllObjects];
-        for (int i = 1; i <= [self totaldaysInThisMonth:date]; i ++) {
-            NSString *subDayStr = [NSString stringWithFormat:@"%zd",i];
-            [_daysArr addObject:subDayStr];
-        }
-        [_pickerView reloadAllComponents];
+        // 处理选中月日数
+        [self reloadDaysOfMonth];
         // 处理每月最大日期
         if (selectDayStr.integerValue > _daysArr.count) {
-            selectDayStr = [_daysArr lastObject];
+            selectDayStr = _daysArr[_daysArr.count - 1];
         }
     }
-    
     // 是否允许选当前时间之前的日期
     [self allowSelectPastDate];
 }
@@ -349,35 +342,25 @@
         NSDate *otherDate = [self dateFromString:otherDateStr withDateFormat:@"yyyy-MM-dd"];
         NSInteger result = [self comparedDate:currentDate withOtherDate:otherDate withDateFormat:@"yyyy-MM-dd"];
         if (result == 1) { // 选中日期在当前时间之前
-            if (selectYearStr.integerValue < [self year:currentDate]) {
-                selectYearStr = [NSString stringWithFormat:@"%zd",[self year:currentDate]];
-                [_yearsArr enumerateObjectsUsingBlock:^(NSString *subYearStr, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([selectYearStr isEqualToString:subYearStr]) {
-                        [_pickerView selectRow:idx inComponent:0 animated:YES];
-                        *stop = YES;
-                    }
-                }];
-            }
-            if (selectMonthStr.integerValue < [self month:currentDate]) {
-                selectMonthStr = [NSString stringWithFormat:@"%zd",[self month:currentDate]];
-                [_monthsArr enumerateObjectsUsingBlock:^(NSString *subMonthStr, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([selectMonthStr isEqualToString:subMonthStr]) {
-                        [_pickerView selectRow:idx inComponent:1 animated:YES];
-                        *stop = YES;
-                    }
-                }];
-            }
-            if (selectDayStr.integerValue < [self day:currentDate]) {
-                selectDayStr = [NSString stringWithFormat:@"%zd",[self day:currentDate]];
-                [_daysArr enumerateObjectsUsingBlock:^(NSString *subDayStr, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([selectDayStr isEqualToString:subDayStr]) {
-                        [_pickerView selectRow:idx inComponent:2 animated:YES];
-                        *stop = YES;
-                    }
-                }];
-            }
+            // 选中当前日期
+            [self pickerViewScrollToToday];
+            // 处理选中月日数
+            [self reloadDaysOfMonth];
         }
     }
+}
+
+// 处理选中月的日数
+- (void)reloadDaysOfMonth
+{
+    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",selectYearStr,selectMonthStr];
+    NSDate *date = [self dateFromString:dateStr withDateFormat:@"yyyy-MM"];
+    [_daysArr removeAllObjects];
+    for (int i = 1; i <= [self totaldaysInThisMonth:date]; i ++) {
+        NSString *subDayStr = [NSString stringWithFormat:@"%zd",i];
+        [_daysArr addObject:subDayStr];
+    }
+    [_pickerView reloadAllComponents];
 }
 
 #pragma mark - date
@@ -423,12 +406,6 @@
     }
     // two dates are same
     return 0;
-}
-
-// 返回今天是星期几
-- (NSInteger)weekday:(NSDate *)date{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday) fromDate:date];
-    return [components weekday];
 }
 
 // date是几号
