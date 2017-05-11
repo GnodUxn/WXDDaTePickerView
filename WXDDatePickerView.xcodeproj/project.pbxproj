@@ -15,6 +15,7 @@
 		2283AEF31EC416E7002B007B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2283AEF11EC416E7002B007B /* LaunchScreen.storyboard */; };
 		2283AEFE1EC416E7002B007B /* WXDDatePickerViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2283AEFD1EC416E7002B007B /* WXDDatePickerViewTests.m */; };
 		2283AF091EC416E7002B007B /* WXDDatePickerViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2283AF081EC416E7002B007B /* WXDDatePickerViewUITests.m */; };
+		2283AF181EC416FA002B007B /* WXDDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2283AF171EC416FA002B007B /* WXDDatePickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		2283AF041EC416E7002B007B /* WXDDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WXDDatePickerViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2283AF081EC416E7002B007B /* WXDDatePickerViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXDDatePickerViewUITests.m; sourceTree = "<group>"; };
 		2283AF0A1EC416E7002B007B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2283AF161EC416FA002B007B /* WXDDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXDDatePickerView.h; sourceTree = "<group>"; };
+		2283AF171EC416FA002B007B /* WXDDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXDDatePickerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,8 @@
 		2283AED71EC416E7002B007B = {
 			isa = PBXGroup;
 			children = (
+				2283AF161EC416FA002B007B /* WXDDatePickerView.h */,
+				2283AF171EC416FA002B007B /* WXDDatePickerView.m */,
 				2283AEE21EC416E7002B007B /* WXDDatePickerView */,
 				2283AEFC1EC416E7002B007B /* WXDDatePickerViewTests */,
 				2283AF071EC416E7002B007B /* WXDDatePickerViewUITests */,
@@ -207,7 +212,8 @@
 				TargetAttributes = {
 					2283AEDF1EC416E7002B007B = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 2V4349HG8L;
+						ProvisioningStyle = Manual;
 					};
 					2283AEF81EC416E7002B007B = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -273,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2283AF181EC416FA002B007B /* WXDDatePickerView.m in Sources */,
 				2283AEEB1EC416E7002B007B /* ViewController.m in Sources */,
 				2283AEE81EC416E7002B007B /* AppDelegate.m in Sources */,
 				2283AEE51EC416E7002B007B /* main.m in Sources */,
@@ -424,10 +431,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2V4349HG8L;
 				INFOPLIST_FILE = WXDDatePickerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zonsim.WXDDatePickerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6ad1649a-193a-4443-b82c-301066e7dd39";
+				PROVISIONING_PROFILE_SPECIFIER = "WXD Wildcard App Provisioning Profiles";
 			};
 			name = Debug;
 		};
@@ -435,7 +446,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WXDDatePickerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zonsim.WXDDatePickerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
