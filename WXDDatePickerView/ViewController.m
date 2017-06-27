@@ -32,7 +32,7 @@
 
 - (void)selectAction:(UIButton *)btn {
     
-    WXDDatePickerView *dateView=[[WXDDatePickerView alloc] initWithFrame:[UIScreen mainScreen].bounds title:@"选择考试日期"];
+    WXDDatePickerView *dateView=[[WXDDatePickerView alloc] initWithFrame:[UIScreen mainScreen].bounds title:@"选择日期"];
     dateView.isAllowSelectPastDate = NO;
     dateView.dateStringBlock = ^(NSString *dateString){
         NSLog(@"%@",dateString);
